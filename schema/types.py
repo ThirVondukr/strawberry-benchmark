@@ -29,7 +29,7 @@ class AuthorType:
         """
     )
 
-    @strawberry.field(description="The books published by the author.")
+    @strawberry.field(description="The number of books published by the author.")
     async def published_books_count(self, info: Info) -> int:
         return await info.context[DataLoaders.author_published_books_count].load(self.id)
 
