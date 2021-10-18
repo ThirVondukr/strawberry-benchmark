@@ -65,7 +65,7 @@ class Author(Base):
     first_name = Column(String(length=60), nullable=False)
     last_name = Column(String(length=60), nullable=False)
 
-    books_published = column_property(
+    published_books_count = column_property(
         select(func.count(Book.id))
         .filter(AuthorBookRelationship.author_id == id)
         .scalar_subquery(),

@@ -27,7 +27,7 @@ class Query:
             .options(
                 selectinload(Store.books)
                 .options(
-                    selectinload(Book.authors).options(undefer(Author.books_published)),
+                    selectinload(Book.authors).options(undefer(Author.published_books_count)),
                     selectinload(Book.tags),
                 )
             )

@@ -30,8 +30,8 @@ class AuthorType:
     )
 
     @strawberry.field(description="The books published by the author.")
-    async def books_published(self, info: Info) -> List[BookType]:
-        pass
+    async def published_books_count(self, info: Info) -> int:
+        return await info.context[DataLoaders.author_published_books_count].load(self.id)
 
 
 @strawberry.type(name="Tag")
@@ -62,7 +62,7 @@ class BookType:
         The title of the book.
         """
     )
-    
+
     isbn: str = strawberry.field(
         description="""
         The ISBN (International Standard Book Number) of the book.

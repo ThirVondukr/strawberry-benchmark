@@ -9,6 +9,7 @@ Base = declarative_base()
 engine = create_async_engine(
     settings.database.database_url,
     future=True,
+    echo=settings.database.echo,
 )
 session = sessionmaker(
     bind=engine,
