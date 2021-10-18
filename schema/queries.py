@@ -16,7 +16,8 @@ class Query:
     async def store(self, store_id: int) -> Optional[StoreType]:
         query = select(Store).filter(Store.id == store_id).limit(1)
         async with get_session() as session:
-            return await session.scalar(query)
+            store = await session.scalar(query)
+        return store
 
     @strawberry.field(description="Gets a store by ID (uses joins).")
     async def store_joined(self, store_id: int) -> Optional[StoreInlineType]:

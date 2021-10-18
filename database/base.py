@@ -11,7 +11,7 @@ engine = create_async_engine(
     future=True,
     echo=settings.database.echo,
 )
-session = sessionmaker(
+session_factory = sessionmaker(
     bind=engine,
     class_=AsyncSession,
     future=True,
@@ -20,9 +20,9 @@ session = sessionmaker(
 
 @asynccontextmanager
 async def get_session():
-    async with session() as session_:
+    async with session_factory() as session:
         try:
-            yield session_
+            yield session
         except Exception as e:
-            await session_.rollback()
+            await session.rollback()
             raise e

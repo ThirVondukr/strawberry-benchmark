@@ -5,7 +5,7 @@ these benchmarks have been made to compare the performance of dataloaders and jo
 ## How to use
 
 You can run the code in this repository using [Docker Compose](https://github.com/docker/compose). Make sure you
-have it installed on your machine!
+have it installed on your machine! You'll also need to set environment variables, referencing the [sample file](.env.example)!
 
 ```text
 docker compose up
