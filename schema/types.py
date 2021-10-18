@@ -6,6 +6,8 @@ from typing import List, Optional
 import strawberry
 from strawberry.types import Info
 
+from schema.loaders import DataLoaders
+
 
 @strawberry.type(name="Author")
 class AuthorType:
@@ -75,11 +77,11 @@ class BookType:
 
     @strawberry.field(description="The authors of the book.")
     async def authors(self, info: Info) -> List[AuthorType]:
-        pass
+        return await info.context[DataLoaders.book_authors].load(self.id)
 
     @strawberry.field(description="The tags of the book.")
     async def tags(self, info: Info) -> List[TagType]:
-        pass
+        return await info.context[DataLoaders.book_tags].load(self.id)
 
 
 @strawberry.type(name="Store")
@@ -92,4 +94,4 @@ class StoreType:
 
     @strawberry.field(description="The books in the store.")
     async def books(self, info: Info) -> List[BookType]:
-        pass
+        return await info.context[DataLoaders.store_books].load(self.id)

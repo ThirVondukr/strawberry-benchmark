@@ -1,12 +1,37 @@
 from typing import Optional
 
 import strawberry
-from strawberry.types import Info
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload, undefer
 
+from database.base import get_session
+from database.models import Store, Book, Author
 from schema.types import StoreType
+from schema.types_inline import StoreInlineType
+
 
 @strawberry.type
 class Query:
     @strawberry.field(description="Gets a store by ID.")
-    async def store(self, info: Info, id: strawberry.ID) -> Optional[StoreType]:
-        pass
+    async def store(self, store_id: int) -> Optional[StoreType]:
+        query = select(Store).filter(Store.id == store_id).limit(1)
+        async with get_session() as session:
+            return await session.scalar(query)
+
+    @strawberry.field
+    async def store_joined(self, store_id: int) -> Optional[StoreInlineType]:
+        query = (
+            select(Store)
+            .filter(Store.id == store_id)
+            .limit(1)
+            .options(
+                selectinload(Store.books)
+                .options(
+                    selectinload(Book.authors).options(undefer(Author.books_published)),
+                    selectinload(Book.tags),
+                )
+            )
+        )
+        async with get_session() as session:
+            store = await session.scalar(query)
+        return store
