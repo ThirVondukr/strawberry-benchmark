@@ -60,11 +60,13 @@ class BookType:
         The title of the book.
         """
     )
+    
     isbn: str = strawberry.field(
         description="""
         The ISBN (International Standard Book Number) of the book.
         """
     )
+
     published_at: datetime = strawberry.field(
         description="""
         When the book was published.
