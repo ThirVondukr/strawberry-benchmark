@@ -24,7 +24,7 @@ class AuthorBookRelationship(Base):
     __tablename__ = "book_author_relationship"
 
     book_id = Column(Integer, ForeignKey("book.id"), primary_key=True)
-    author_id = Column(Integer, ForeignKey("author.id"), primary_key=True)
+    author_id = Column(Integer, ForeignKey("author.id"), primary_key=True, index=True)
 
     book = relationship("Book")
     author = relationship("Author")
