@@ -10,6 +10,8 @@ class StoreBooksRelationship(Base):
     book_id = Column(Integer, ForeignKey("book.id"), primary_key=True)
     store_id = Column(Integer, ForeignKey("store.id"), primary_key=True)
 
+    book = relationship("Book")
+
 
 class Store(Base):
     __tablename__ = "store"
@@ -24,6 +26,9 @@ class AuthorBookRelationship(Base):
     book_id = Column(Integer, ForeignKey("book.id"), primary_key=True)
     author_id = Column(Integer, ForeignKey("author.id"), primary_key=True)
 
+    book = relationship("Book")
+    author = relationship("Author")
+
 
 class Tag(Base):
     __tablename__ = "tag"
@@ -36,6 +41,9 @@ class BookTagRelationship(Base):
     __tablename__ = "book_tag_relationship"
     book_id = Column(Integer, ForeignKey("book.id"), primary_key=True)
     tag_id = Column(Integer, ForeignKey("tag.id"), primary_key=True)
+
+    book = relationship("Book")
+    tag = relationship("Tag")
 
 
 class Book(Base):
