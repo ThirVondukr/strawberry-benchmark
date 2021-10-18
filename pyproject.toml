@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "strawberry-sandbox"
+name = "strawberry-benchmark"
 version = "0.1.0"
 description = ""
 authors = ["Doctor <thirvondukr@gmail.com>"]
